@@ -31,10 +31,6 @@ async function loadExpress(config) {
   app.use('/', authRoutes)
   app.use('/', userRoutes)
 
-  app.use(function (req, res, next) {
-    next();
-  });
-
   // error handler
   app.use(function (err, req, res, next) {
     console.log(err);
@@ -46,10 +42,10 @@ async function loadExpress(config) {
         message: err.message,
       }
 
-      return failure(res, { error }, 404)
+      return failure(res, { success: false, data: { error }, error: err.message }, 404)
     }
 
-    return failure(res, { error: err }, 500)
+    return failure(res, { success: false, error: err.message }, 500)
   });
 
   app.listen(port, () => {

@@ -30,12 +30,12 @@ export const validator = (schema: string) => {
       const s = schemas[schema]
 
       await s.validate(req.body)
-      
+
       next()
     } catch (e) {
-      if (e.name === 'ValidationError') return failure(res, { error: e.message })
+      if (e.name === 'ValidationError') return failure(res, { success: false, error: e.message })
 
-      return failure(res, { error: "Internal Server Error" })
+      return failure(res, { success: false, error: "Internal Server Error" })
     }
   }
 }

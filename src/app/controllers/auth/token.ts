@@ -11,7 +11,7 @@ const token = async (req: Request, res) => {
   const user: IUser = await librarian.findOne("User", { email: email.toLowerCase() })
 
   if (!user) {
-    failure(res, { error: "User with email does not exist" }, 404)
+    failure(res, { success: false, error: "User with email does not exist" }, 404)
   }
 
   const requestToken = uniqid('fm')
@@ -36,7 +36,7 @@ const token = async (req: Request, res) => {
     console.log(token)
   }
 
-  return success(res, { success: true, message: "Login token sent" }, 200)
+  return success(res, { success: true, data: { message: "Login token sent" } }, 200)
 }
 
 export default token
